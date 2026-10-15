@@ -1,14 +1,14 @@
-﻿'use client';
+'use client';
 
 import * as React from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { TrendingUp, ShieldCheck, CheckCircle2, RotateCw } from 'lucide-react';
+import { ShieldCheck, RotateCw } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { tatadanaDb } from '@/lib/store/mock-db';
 
-export default function VerifyOtpPage() {
+function VerifyOtpContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const initialPhone = searchParams.get('phone') || tatadanaDb.getProfile().phone_number || '081234567890';
@@ -132,3 +132,19 @@ export default function VerifyOtpPage() {
   );
 }
 
+export default function VerifyOtpPage() {
+  return (
+    <React.Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-slate-50 p-6 text-slate-900">
+          <div className="w-full max-w-md bg-white rounded-3xl border border-slate-200/80 p-8 shadow-xl text-center space-y-4">
+            <div className="w-10 h-10 border-4 border-brand-500 border-t-transparent rounded-full animate-spin mx-auto" />
+            <p className="text-sm text-slate-500 font-medium">Memuat verifikasi OTP...</p>
+          </div>
+        </div>
+      }
+    >
+      <VerifyOtpContent />
+    </React.Suspense>
+  );
+}
