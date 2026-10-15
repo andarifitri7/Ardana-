@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/Input';
 import { ArdanaLogo } from '@/components/ui/ArdanaLogo';
 import { tatadanaDb } from '@/lib/store/mock-db';
 
-export default function VerifyEmailPage() {
+function VerifyEmailContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const emailParam = searchParams.get('email') || '';
@@ -180,5 +180,22 @@ export default function VerifyEmailPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <React.Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#FFFCFA] via-rose-50/40 to-slate-100 p-4">
+          <div className="w-full max-w-md bg-white rounded-3xl border border-rose-100 p-8 shadow-xl text-center space-y-4">
+            <div className="w-10 h-10 border-4 border-brand-500 border-t-transparent rounded-full animate-spin mx-auto" />
+            <p className="text-sm text-slate-500 font-medium">Memuat halaman verifikasi...</p>
+          </div>
+        </div>
+      }
+    >
+      <VerifyEmailContent />
+    </React.Suspense>
   );
 }
