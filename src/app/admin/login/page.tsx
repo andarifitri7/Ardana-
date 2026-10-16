@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { ArdanaLogo } from '@/components/ui/ArdanaLogo';
 
-export default function AdminLoginPage() {
+function AdminLoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectPath = searchParams.get('redirect') || '/admin';
@@ -39,7 +39,7 @@ export default function AdminLoginPage() {
         throw new Error(data.message || 'Verifikasi administrator gagal.');
       }
 
-      // Success: redirect to admin portal
+      // Berhasil: arahkan ke admin portal
       router.push(redirectPath);
       router.refresh();
     } catch (err: any) {
@@ -158,5 +158,20 @@ export default function AdminLoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function AdminLoginPage() {
+  return (
+    <React.Suspense
+      fallback={
+        <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-center items-center p-4">
+          <div className="w-10 h-10 border-4 border-brand-500 border-t-transparent rounded-full animate-spin mx-auto" />
+          <p className="text-sm text-slate-400 mt-4 font-medium">Memuat portal admin...</p>
+        </div>
+      }
+    >
+      <AdminLoginContent />
+    </React.Suspense>
   );
 }
